@@ -17,8 +17,7 @@ class TestHTMLNode(unittest.TestCase):
         node = HTMLNode(tag = "table")
         expected = ""
         self.assertEqual(expected, node.props_to_html())
-    
-
+        
     # def test_to_html(self):
     #     node = HTMLNode(tag = "a", value = "Google", props = {"href": "https://www.google.com", "target": "_blank"})
     #     self.assertRaises(NotImplementedError, node.to_html())
