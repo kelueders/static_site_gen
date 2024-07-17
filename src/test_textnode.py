@@ -16,7 +16,7 @@ class TestTextNode(unittest.TestCase):
 
     def test_url(self):
         node = TextNode("Testing text", "bold", "http://google.com")
-        node2 = TextNode("Testing text", "bold")
+        node2 = TextNode("Testing text", "bold", None)
         self.assertNotEqual(node, node2)
 
     def test_eq_url(self):

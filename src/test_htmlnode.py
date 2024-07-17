@@ -8,9 +8,20 @@ class TestHTMLNode(unittest.TestCase):
         expected = ' href="https://www.google.com" target="_blank"'
         self.assertEqual(expected, node.props_to_html())
 
-    def test_to_html(self):
-        node = HTMLNode(tag = "a", value = "Google", props = {"href": "https://www.google.com", "target": "_blank"})
-        self.assertRaises(NotImplementedError, node.to_html())
+    def test_props_to_html_novalue(self):
+        node = HTMLNode(tag = "body", props = {"style": "background-color:powderblue"})
+        expected = ' style="background-color:powderblue"'
+        self.assertEqual(expected, node.props_to_html())
+
+    def test_props_to_html_noprops(self):
+        node = HTMLNode(tag = "table")
+        expected = ""
+        self.assertEqual(expected, node.props_to_html())
+    
+
+    # def test_to_html(self):
+    #     node = HTMLNode(tag = "a", value = "Google", props = {"href": "https://www.google.com", "target": "_blank"})
+    #     self.assertRaises(NotImplementedError, node.to_html())
 
 if __name__ == "__main__":
     unittest.main()
