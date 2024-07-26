@@ -15,7 +15,7 @@ class TestLeafNode(unittest.TestCase):
 
     def test_to_html_notag(self):
         node = LeafNode(tag = None, value = "This is a paragraph of text.")
-        expected = 'This is a paragraph of text.'
+        expected = "This is a paragraph of text."
         self.assertEqual(expected, node.to_html())
 
 if __name__ == "__main__":

@@ -4,20 +4,18 @@ class HTMLNode:
         self.value = value        # string - text inside
         self.children = children  # list - of HTMLNode objects
         self.props = props        # dict - attributes of HTML tag
-
-    def __repr__(self):
-        return f"HTMLNode(tag = {self.tag}, value = {self.value}, children = {self.children}, props = {self.props})"
     
     def to_html(self):
-        raise NotImplementedError("This is not implemented")
+        raise NotImplementedError("to_html is not implemented")
     
     def props_to_html(self):
-        print(f"props: {self.props}") # Debug statement
-        html = ""
         if self.props is None:
             return ""
+        props_html = ""
         for k, v in self.props.items():
-            html += f' {k}="{v}"'
-        print(f"props html: {html}") # Debug statement
-        return html
+            props_html += f' {k}="{v}"'
+        return props_html
+    
+    def __repr__(self):
+        return f"HTMLNode(tag={self.tag!r}, value={self.value!r}, children={self.children!r}, props={self.props!r})"
 
