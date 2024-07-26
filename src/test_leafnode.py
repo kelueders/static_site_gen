@@ -18,5 +18,10 @@ class TestLeafNode(unittest.TestCase):
         expected = "This is a paragraph of text."
         self.assertEqual(expected, node.to_html())
 
+    def test_to_html_no_value_raises_error(self):
+        with self.assertRaises(ValueError):
+            node = LeafNode("p", None)
+            node.to_html()
+
 if __name__ == "__main__":
     unittest.main()
