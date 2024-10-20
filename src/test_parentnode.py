@@ -49,5 +49,15 @@ class TestParentNode(unittest.TestCase):
         expected = '<ul><li><b>Coffee</b></li><li>Tea</li><li>Milk</li></ul>'
         self.assertEqual(expected, node.to_html())
 
+    # Example from solution
+    def test_to_html_with_grandchildren(self):
+        grandchild_node = LeafNode("b", "grandchild")
+        child_node = ParentNode("span", [grandchild_node])
+        parent_node = ParentNode("div", [child_node])
+        self.assertEqual(
+            parent_node.to_html(),
+            "<div><span><b>grandchild</b></span></div>",
+        )
+
 if __name__ == "__main__":
     unittest.main()
