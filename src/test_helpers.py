@@ -2,9 +2,9 @@ import unittest
 
 from leafnode import LeafNode
 from textnode import TextNode, TextType
-from node_converters import text_node_to_html_node
+from helpers import text_node_to_html_node, split_nodes_delimiter
 
-class TestNodeConverters(unittest.TestCase):
+class TestTextNodetoHtmlNode(unittest.TestCase):
     def test_text_node_to_html_node_text(self):
         node = TextNode("This is text", TextType.TEXT)
         expected = LeafNode(tag=None, value='This is text', props=None)
@@ -34,6 +34,17 @@ class TestNodeConverters(unittest.TestCase):
         with self.assertRaises(TypeError):
             node = TextNode("p", "blah")
             text_node_to_html_node(node)
+
+class TestSplitNodesDelimiter(unittest.TestCase):
+    def test_split_delimiter_code(self):
+        node = TextNode("This is text with a `code block` word", TextType.TEXT)
+        actual = split_nodes_delimiter([node], "`", TextType.CODE)
+        expected = [
+            TextNode("This is text with a ", TextType.TEXT),
+            TextNode("code block", TextType.CODE),
+            TextNode(" word", TextType.TEXT),
+            ]
+        self.assertEqual(expected, actual)
 
 if __name__ == "__main__":
     unittest.main()

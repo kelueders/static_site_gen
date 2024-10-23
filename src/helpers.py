@@ -1,4 +1,4 @@
-from textnode import TextType
+from textnode import TextType, TextNode
 from leafnode import LeafNode
 
 def text_node_to_html_node(text_node):
@@ -18,3 +18,15 @@ def text_node_to_html_node(text_node):
         raise TypeError("This text has the wrong type.")
     
     return leaf
+
+def split_nodes_delimiter(old_nodes, delimiter, text_type):
+    new_nodes = []
+    for node in old_nodes:
+        if node.text_type != TextType.TEXT.value:
+            new_nodes.append(node)
+        sentence_frags = node.text.split(delimiter)
+        for sentence in sentence_frags:
+            new_node = TextNode(sentence, text_type)
+            new_nodes.append(new_node)
+
+    return new_nodes
