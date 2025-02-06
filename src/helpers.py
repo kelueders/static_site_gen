@@ -15,16 +15,23 @@ def text_node_to_html_node(text_node):
     elif text_node.text_type == TextType.IMAGE.value:
         leaf = LeafNode("img", "", {"src": text_node.url, "alt": text_node.text})
     else:
-        raise TypeError("This text has the wrong type.")
+        raise AttributeError(f"invalid text type: {text_node.text_type}")
     
     return leaf
 
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
+    '''
+    Takes a list of "old notes", a delimiter, and a text type and returns
+    a new list of nodes, where any "text" type nodes in the input list are
+    potentially split into multiple nodes based on the syntax.
+    '''
     new_nodes = []
     for node in old_nodes:
         if node.text_type != TextType.TEXT.value:
             new_nodes.append(node)
+
         sentence_frags = node.text.split(delimiter)
+
         for sentence in sentence_frags:
             new_node = TextNode(sentence, text_type)
             new_nodes.append(new_node)

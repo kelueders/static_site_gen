@@ -31,8 +31,8 @@ class TestTextNodetoHtmlNode(unittest.TestCase):
         self.assertEqual(expected, text_node_to_html_node(node))
 
     def test_text_node_to_html_raises_error(self):
-        with self.assertRaises(TypeError):
-            node = TextNode("p", "blah")
+        with self.assertRaises(AttributeError):
+            node = TextNode("p", 12)
             text_node_to_html_node(node)
 
 class TestSplitNodesDelimiter(unittest.TestCase):
