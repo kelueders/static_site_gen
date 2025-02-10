@@ -1,0 +1,122 @@
+
+DEBUG:helpers:  Node:  TextNode(This is text with a `code block` word, text, None)
+DEBUG:helpers:  new_nodes:  [TextNode(This is text with a `code block` word, text, None)]
+DEBUG:helpers:  Node:  TextNode(This is text with a `code block` word, text, None)
+DEBUG:helpers:Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 15:40:02,522 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 15:40:02,523 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 15:41:22,747 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 15:41:22,747 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 15:41:51,038 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 15:41:51,038 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 15:49:37,131 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 15:49:37,131 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 15:51:01,138 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 15:51:01,138 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 15:56:50,105 - helpers - DEBUG -   Node:  TextNode(I love putting things in *italics*!, text, None)
+2025-02-10 15:56:50,106 - helpers - DEBUG - Sentences split into an array: ['I love putting things in ', 'italics', '!']
+2025-02-10 15:56:50,106 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 15:56:50,106 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 15:57:18,266 - helpers - DEBUG -   Node:  TextNode(I love putting things in *italics*!, text, None)
+2025-02-10 15:57:18,267 - helpers - DEBUG -   new_nodes:  [TextNode(I love putting things in *italics*!, text, None)]
+2025-02-10 15:57:18,267 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 15:57:18,267 - helpers - DEBUG -   new_nodes:  [TextNode(This is text with a `code block` word, text, None)]
+2025-02-10 15:58:38,823 - helpers - DEBUG -   Node:  TextNode(I love putting things in *italics*!, text, None)
+2025-02-10 15:58:38,823 - helpers - DEBUG -   new_nodes:  [TextNode(I love putting things in *italics*!, text, None)]
+2025-02-10 15:58:38,824 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 15:58:38,824 - helpers - DEBUG -   new_nodes:  [TextNode(This is text with a `code block` word, text, None)]
+2025-02-10 16:00:32,433 - helpers - DEBUG -   Node:  TextNode(I love putting things in *italics*!, TextType.TEXT, None)
+2025-02-10 16:00:32,433 - helpers - DEBUG - Sentences split into an array: ['I love putting things in ', 'italics', '!']
+2025-02-10 16:00:32,433 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, TextType.TEXT, None)
+2025-02-10 16:00:32,433 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 16:02:35,558 - helpers - DEBUG -   Node:  TextNode(I love putting things in *italics*!, text, None)
+2025-02-10 16:02:35,558 - helpers - DEBUG - Sentences split into an array: ['I love putting things in ', 'italics', '!']
+2025-02-10 16:02:35,558 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 16:02:35,558 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 16:05:10,113 - helpers - DEBUG -   Node:  TextNode(Yay for **bold** font!, text, None)
+2025-02-10 16:05:10,113 - helpers - DEBUG - Sentences split into an array: ['Yay for ', '', 'bold', '', ' font!']
+2025-02-10 16:05:10,114 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 16:05:10,114 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 16:05:10,114 - helpers - DEBUG -   Node:  TextNode(I love putting things in *italics*!, text, None)
+2025-02-10 16:05:10,114 - helpers - DEBUG - Sentences split into an array: ['I love putting things in ', 'italics', '!']
+2025-02-10 16:05:25,661 - helpers - DEBUG -   Node:  TextNode(Yay for **bold** font!, text, None)
+2025-02-10 16:05:25,661 - helpers - DEBUG - Sentences split into an array: ['Yay for ', '', 'bold', '', ' font!']
+2025-02-10 16:05:25,662 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 16:05:25,662 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 16:05:25,662 - helpers - DEBUG -   Node:  TextNode(I love putting things in *italics*!, text, None)
+2025-02-10 16:05:25,662 - helpers - DEBUG - Sentences split into an array: ['I love putting things in ', 'italics', '!']
+2025-02-10 16:05:51,207 - helpers - DEBUG -   Node:  TextNode(Yay for **bold** font!, text, None)
+2025-02-10 16:05:51,207 - helpers - DEBUG - Sentences split into an array: ['Yay for ', '', 'bold', '', ' font!']
+2025-02-10 16:05:51,208 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 16:05:51,208 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 16:05:51,208 - helpers - DEBUG -   Node:  TextNode(I love putting things in *italics*!, text, None)
+2025-02-10 16:05:51,208 - helpers - DEBUG - Sentences split into an array: ['I love putting things in ', 'italics', '!']
+2025-02-10 16:05:59,705 - helpers - DEBUG -   Node:  TextNode(Yay for **bold** font!, text, None)
+2025-02-10 16:05:59,706 - helpers - DEBUG - Sentences split into an array: ['Yay for ', '', 'bold', '', ' font!']
+2025-02-10 16:05:59,706 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 16:05:59,706 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 16:05:59,707 - helpers - DEBUG -   Node:  TextNode(I love putting things in *italics*!, text, None)
+2025-02-10 16:05:59,707 - helpers - DEBUG - Sentences split into an array: ['I love putting things in ', 'italics', '!']
+2025-02-10 16:07:18,603 - helpers - DEBUG -   Node:  TextNode(Yay for **bold** font!, text, None)
+2025-02-10 16:07:18,603 - helpers - DEBUG - Sentences split into an array: ['Yay for ', 'bold', ' font!']
+2025-02-10 16:07:18,603 - helpers - DEBUG - 
+2025-02-10 16:07:18,604 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 16:07:18,604 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 16:07:18,604 - helpers - DEBUG - 
+2025-02-10 16:07:18,604 - helpers - DEBUG -   Node:  TextNode(I love putting things in *italics*!, text, None)
+2025-02-10 16:07:18,604 - helpers - DEBUG - Sentences split into an array: ['I love putting things in ', 'italics', '!']
+2025-02-10 16:07:18,604 - helpers - DEBUG - 
+2025-02-10 16:08:06,604 - helpers - DEBUG -   Node:  TextNode(Yay for **bold** font!, text, None)
+2025-02-10 16:08:06,604 - helpers - DEBUG - Sentences split into an array: ['Yay for ', 'bold', ' font!']
+2025-02-10 16:08:06,604 - helpers - DEBUG - 
+2025-02-10 16:08:06,604 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 16:08:06,604 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 16:08:06,604 - helpers - DEBUG - 
+2025-02-10 16:08:06,605 - helpers - DEBUG -   Node:  TextNode(I love putting things in *italics*, text, None)
+2025-02-10 16:08:06,605 - helpers - DEBUG - Sentences split into an array: ['I love putting things in ', 'italics', '']
+2025-02-10 16:08:06,605 - helpers - DEBUG - 
+2025-02-10 16:08:18,522 - helpers - DEBUG -   Node:  TextNode(Yay for **bold** font!, text, None)
+2025-02-10 16:08:18,522 - helpers - DEBUG - Sentences split into an array: ['Yay for ', 'bold', ' font!']
+2025-02-10 16:08:18,522 - helpers - DEBUG - 
+2025-02-10 16:08:18,522 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 16:08:18,522 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 16:08:18,522 - helpers - DEBUG - 
+2025-02-10 16:08:18,522 - helpers - DEBUG -   Node:  TextNode(I love putting things in *italics*!, text, None)
+2025-02-10 16:08:18,522 - helpers - DEBUG - Sentences split into an array: ['I love putting things in ', 'italics', '!']
+2025-02-10 16:08:18,523 - helpers - DEBUG - 
+2025-02-10 16:16:03,187 - helpers - DEBUG -   Node:  TextNode(Yay for **bold** font!, text, None)
+2025-02-10 16:16:03,187 - helpers - DEBUG - Sentences split into an array: ['Yay for ', 'bold', ' font!']
+2025-02-10 16:16:03,187 - helpers - DEBUG - 
+2025-02-10 16:16:03,187 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 16:16:03,187 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 16:16:03,187 - helpers - DEBUG - 
+2025-02-10 16:16:03,187 - helpers - DEBUG -   Node:  TextNode(I love putting things in *italics*!, text, None)
+2025-02-10 16:16:03,187 - helpers - DEBUG - Sentences split into an array: ['I love putting things in ', 'italics', '!']
+2025-02-10 16:16:03,188 - helpers - DEBUG - 
+2025-02-10 16:17:13,498 - helpers - DEBUG -   Node:  TextNode(Yay for **bold** font!, text, None)
+2025-02-10 16:17:13,498 - helpers - DEBUG - Sentences split into an array: ['Yay for ', 'bold', ' font!']
+2025-02-10 16:17:13,498 - helpers - DEBUG - 
+2025-02-10 16:17:13,498 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 16:17:13,499 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 16:17:13,499 - helpers - DEBUG - 
+2025-02-10 16:17:13,499 - helpers - DEBUG -   Node:  TextNode(I love putting things in *italics*!, text, None)
+2025-02-10 16:17:13,499 - helpers - DEBUG - Sentences split into an array: ['I love putting things in ', 'italics', '!']
+2025-02-10 16:17:13,499 - helpers - DEBUG - 
+2025-02-10 16:18:12,169 - helpers - DEBUG -   Node:  TextNode(Yay for **bold** font!, text, None)
+2025-02-10 16:18:12,169 - helpers - DEBUG - Sentences split into an array: ['Yay for ', 'bold', ' font!']
+2025-02-10 16:18:12,170 - helpers - DEBUG - 
+2025-02-10 16:18:12,170 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 16:18:12,170 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 16:18:12,170 - helpers - DEBUG - 
+2025-02-10 16:18:12,170 - helpers - DEBUG -   Node:  TextNode(I love putting things in *italics*!, text, None)
+2025-02-10 16:18:12,170 - helpers - DEBUG - Sentences split into an array: ['I love putting things in ', 'italics', '!']
+2025-02-10 16:18:12,170 - helpers - DEBUG - 
+2025-02-10 16:18:31,094 - helpers - DEBUG -   Node:  TextNode(Yay for **bold** font!, text, None)
+2025-02-10 16:18:31,094 - helpers - DEBUG - Sentences split into an array: ['Yay for ', 'bold', ' font!']
+2025-02-10 16:18:31,094 - helpers - DEBUG - 
+2025-02-10 16:18:31,094 - helpers - DEBUG -   Node:  TextNode(This is text with a `code block` word, text, None)
+2025-02-10 16:18:31,094 - helpers - DEBUG - Sentences split into an array: ['This is text with a ', 'code block', ' word']
+2025-02-10 16:18:31,094 - helpers - DEBUG - 
+2025-02-10 16:18:31,094 - helpers - DEBUG -   Node:  TextNode(I love putting things in *italics*!, text, None)
+2025-02-10 16:18:31,094 - helpers - DEBUG - Sentences split into an array: ['I love putting things in ', 'italics', '!']
+2025-02-10 16:18:31,094 - helpers - DEBUG - 
