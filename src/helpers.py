@@ -6,17 +6,20 @@ from leafnode import LeafNode
 logging.basicConfig(filename="app.log", level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 def text_node_to_html_node(text_node):
-    if text_node.text_type == TextType.TEXT.value:
+    '''
+    Takes a TextNode and converts it to a LeafNode 
+    '''
+    if text_node.text_type == TextType.TEXT:
         leaf = LeafNode(None, text_node.text)
-    elif text_node.text_type == TextType.BOLD.value:
+    elif text_node.text_type == TextType.BOLD:
         leaf = LeafNode("b", text_node.text)
-    elif text_node.text_type == TextType.ITALIC.value:
+    elif text_node.text_type == TextType.ITALIC:
         leaf = LeafNode("i", text_node.text)
-    elif text_node.text_type == TextType.CODE.value:
+    elif text_node.text_type == TextType.CODE:
         leaf = LeafNode("code", text_node.text)
-    elif text_node.text_type == TextType.LINK.value:
+    elif text_node.text_type == TextType.LINK:
         leaf = LeafNode("a", text_node.text, {"href": text_node.url})
-    elif text_node.text_type == TextType.IMAGE.value:
+    elif text_node.text_type == TextType.IMAGE:
         leaf = LeafNode("img", "", {"src": text_node.url, "alt": text_node.text})
     else:
         raise AttributeError(f"invalid text type: {text_node.text_type}")
@@ -37,12 +40,12 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         # if an old node is not a TextType.TEXT type, add it to the new list as-is 
         #       (only split "text" type objects not bold, italic, etc.)
         logger.debug(f'  Node:  {node}')
-        if node.text_type != TextType.TEXT.value:
+        
+        if node.text_type != TextType.TEXT:
             new_nodes.append(node)
-            logger.debug(f'  new_nodes:  {new_nodes}')
 
-            print(f"node.text_type: {node.text_type}, type: {type(node.text_type)}")
-            print(f"TextType.TEXT: {TextType.TEXT}, type: {type(TextType.TEXT)}")
+            logger.debug(f"node.text_type: {node.text_type}, type: {type(node.text_type)}")
+            logger.debug(f"TextType.TEXT: {TextType.TEXT}, type: {type(TextType.TEXT)}")
         else:
             sentence_frags = node.text.split(delimiter)
             i = 0
@@ -69,3 +72,4 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     logger.debug("")
 
     return new_nodes
+
