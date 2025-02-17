@@ -87,6 +87,18 @@ class TestSplitNodesDelimiter(unittest.TestCase):
         ]
         self.assertEqual(expected, actual)
 
+    def test_split_delimiter_multiword_two_bold(self):
+        node = TextNode("Yay for **bolded words** and **more bolded** words!", TextType.TEXT)
+        actual = split_nodes_delimiter([node], "**", TextType.BOLD)
+        expected = [
+            TextNode("Yay for ", TextType.TEXT),
+            TextNode("bolded words", TextType.BOLD),
+            TextNode(" and ", TextType.TEXT),
+            TextNode("more bolded", TextType.BOLD),
+            TextNode(" words!", TextType.TEXT)
+        ]
+        self.assertEqual(expected, actual)
+
     def test_split_delimiter_multiple_nodes(self):
         node1 = TextNode("Wahoo there is **bold** font AND", TextType.TEXT)
         node2 = TextNode("There is a `code block` section!", TextType.TEXT)
@@ -105,9 +117,7 @@ class TestSplitNodesDelimiter(unittest.TestCase):
     def test_split_delimiter_blank(self):
         node = TextNode("", TextType.TEXT)
         actual = split_nodes_delimiter([node], "**", TextType.BOLD)
-        expected = [
-            TextNode("", TextType.TEXT)
-        ]
+        expected = []
         self.assertEqual(expected, actual)
 
     def test_split_delimiter_invalid(self):

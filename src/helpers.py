@@ -28,30 +28,43 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     a new list of nodes, where any "text" type nodes in the input list are
     potentially split into multiple nodes based on the syntax.
     '''
+    # Create an empty list to contain the result of ALL the old_nodes getting split up.
     new_nodes = []
     
     for node in old_nodes:
-        # if an old node is not a TextType.TEXT type, add it to the new list as-is 
-        #       (only split "text" type objects not bold, italic, etc.)
-        
+        # If an old node is not a TextType.TEXT type, add it to the new list as-is 
+        #       (only split "text" type objects not bold, italic, etc.)       
         if node.text_type != TextType.TEXT:
             new_nodes.append(node)
+            continue
 
-        else:
-            sentence_frags = node.text.split(delimiter)
-            i = 0
+        # Create an empty list to contain the result of JUST the one node getting split up.
+        split_nodes = []
 
-            if len(sentence_frags) % 2 == 0:
-                raise ValueError("That's invalid Markdown syntax. Formatted section not closed.")
+        # Split the node up according to the provided delimiter.
+        sentence_frags = node.text.split(delimiter)
 
-            while i < len(sentence_frags):
-                if i % 2 != 0:
-                    new_node = TextNode(sentence_frags[i], text_type)
-                    new_nodes.append(new_node)
-                else:
-                    new_node = TextNode(sentence_frags[i], TextType.TEXT)
-                    new_nodes.append(new_node)
-                i += 1
+        # If there is no matching delimiter (such as **bold ), then the syntax is invalid. Raise an error.
+        if len(sentence_frags) % 2 == 0:
+            raise ValueError("That's invalid Markdown syntax. Formatted section not closed.")
 
+        # Iterate through the list of sentence fragments.
+        for i in range(len(sentence_frags)):
+            # If there is an empty fragment, move to the next item.
+            if sentence_frags[i] == "":
+                continue
+            # If the fragment is an odd index, create a new node of the provided text_type.
+            if i % 2 != 0:
+                new_node = TextNode(sentence_frags[i], text_type)
+                split_nodes.append(new_node)
+            # If the fragment is an even index, create a new TEXT type node.
+            else:
+                new_node = TextNode(sentence_frags[i], TextType.TEXT)
+                split_nodes.append(new_node)
+        
+        # Add these split nodes to the larger node list.
+        new_nodes.extend(split_nodes)
+
+    # Return the result of ALL the old_nodes getting split.
     return new_nodes
 
