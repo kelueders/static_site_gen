@@ -1,6 +1,7 @@
 import unittest
 
-from split_images_links import extract_markdown_images, extract_markdown_links, split_nodes_images, split_nodes_link
+from split_images_links import extract_markdown_images, extract_markdown_links, split_nodes_links, split_nodes_images
+from text_to_textnodes import text_to_textnodes
 from textnode import TextNode, TextType
 
 class TestExtractImages(unittest.TestCase):
@@ -16,6 +17,8 @@ class TestExtractLinks(unittest.TestCase):
         actual = extract_markdown_links(text)
         expected = [("to boot dev", "https://www.boot.dev"), ("to youtube", "https://www.youtube.com/@bootdotdev")]
         self.assertEqual(expected, actual)
+
+''' Testing split_nodes_images() '''
 
 class TestSplitNodesImages(unittest.TestCase):
     def test_split_nodes_images_single(self):
@@ -38,12 +41,53 @@ class TestSplitNodesImages(unittest.TestCase):
 
     def test_split_nodes_images_double(self):
         node = TextNode("This is text with an image ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![kate hiking](https://i.imgur.com/efasd.gif)", TextType.TEXT)
-        first = split_nodes_images([node])
-        second = split_nodes_images(first)
+        actual = split_nodes_images([node])
         expected = [
             TextNode("This is text with an image ", TextType.TEXT),
             TextNode("rick roll", TextType.IMAGE, "https://i.imgur.com/aKaOqIh.gif"),
             TextNode(" and ", TextType.TEXT),
             TextNode("kate hiking", TextType.IMAGE, "https://i.imgur.com/efasd.gif")
         ]
-        self.assertEqual(expected, second)
+        self.assertEqual(expected, actual)
+
+    def test_split_nodes_images_multi_node(self):
+        node1 = TextNode("First there is an image ![eiffle tower](https://i.imgur.com/aKaOqIh.gif)", TextType.TEXT)
+        node2 = TextNode("Then there is another image ![kate hiking](https://i.imgur.com/efasd.gif)", TextType.TEXT)
+        first = split_nodes_images([node1, node2])
+        actual = split_nodes_images(first)
+        expected = [
+            TextNode("First there is an image ", TextType.TEXT),
+            TextNode("eiffle tower", TextType.IMAGE, "https://i.imgur.com/aKaOqIh.gif"),
+            TextNode("Then there is another image ", TextType.TEXT),
+            TextNode("kate hiking", TextType.IMAGE, "https://i.imgur.com/efasd.gif")
+        ]
+        self.assertEqual(expected, actual)
+
+class TestSplitNodesLinks(unittest.TestCase):
+    def test_split_nodes_links_single(self):
+        node = TextNode("This is text with a link [boot dev](https://boot.dev) and it's cool!", TextType.TEXT)
+        actual = split_nodes_links([node])
+        expected = [
+            TextNode("This is text with a link ", TextType.TEXT),
+            TextNode("boot dev", TextType.LINK, "https://boot.dev"),
+            TextNode(" and it's cool!", TextType.TEXT)
+        ]
+        self.assertEqual(expected, actual)
+
+class TestTexttoTextNode(unittest.TestCase):
+    def test_text_to_textnodes_all(self):
+        text = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+        actual = text_to_textnodes(text)
+        expected = [
+            TextNode("This is ", TextType.TEXT),
+            TextNode("text", TextType.BOLD),
+            TextNode(" with an ", TextType.TEXT),
+            TextNode("italic", TextType.ITALIC),
+            TextNode(" word and a ", TextType.TEXT),
+            TextNode("code block", TextType.CODE),
+            TextNode(" and an ", TextType.TEXT),
+            TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
+            TextNode(" and a ", TextType.TEXT),
+            TextNode("link", TextType.LINK, "https://boot.dev"),
+        ]
+        self.assertEqual(expected, actual)
