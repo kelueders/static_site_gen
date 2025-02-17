@@ -3,7 +3,6 @@ import unittest
 from leafnode import LeafNode
 from textnode import TextNode, TextType
 from helpers import text_node_to_html_node, split_nodes_delimiter
-from split_images_links import extract_markdown_images, extract_markdown_links
 
 '''
 Test the text_node_to_html function.
@@ -23,6 +22,11 @@ class TestTextNodetoHtmlNode(unittest.TestCase):
         node = TextNode("This text is italic", TextType.ITALIC)
         expected = LeafNode(tag='i', value='This text is italic', props=None)
         self.assertEqual(expected, text_node_to_html_node(node))
+    
+    def test_text_node_to_html_node_code(self):
+        node = TextNode("This text is code", TextType.CODE)
+        expected = LeafNode(tag='code', value='This text is code', props=None)
+        self.assertEqual(expected, text_node_to_html_node(node))  
 
     def test_text_node_to_html_node_link(self):
         node = TextNode("Google", TextType.LINK, "Google.com")
@@ -73,6 +77,16 @@ class TestSplitNodesDelimiter(unittest.TestCase):
         ]
         self.assertEqual(expected, actual)
 
+    def test_split_delimiter_multiword_bold(self):
+        node = TextNode("Yay for **bolded words** font!", TextType.TEXT)
+        actual = split_nodes_delimiter([node], "**", TextType.BOLD)
+        expected = [
+            TextNode("Yay for ", TextType.TEXT),
+            TextNode("bolded words", TextType.BOLD),
+            TextNode(" font!", TextType.TEXT)
+        ]
+        self.assertEqual(expected, actual)
+
     def test_split_delimiter_multiple_nodes(self):
         node1 = TextNode("Wahoo there is **bold** font AND", TextType.TEXT)
         node2 = TextNode("There is a `code block` section!", TextType.TEXT)
@@ -88,24 +102,20 @@ class TestSplitNodesDelimiter(unittest.TestCase):
         ]
         self.assertEqual(expected, after_code)
 
-    def test_text_node_to_html_raises_error(self):
-        with self.assertRaises(Exception):
-            node = TextNode("Yay!", TextType.BOLD)
-            split_nodes_delimiter(node)
-
-class TestExtractImages(unittest.TestCase):
-    def test_extract_markdown_images(self):
-        text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
-        actual = extract_markdown_images(text)
-        expected = [("rick roll", "https://i.imgur.com/aKaOqIh.gif"), ("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg")]
+    def test_split_delimiter_blank(self):
+        node = TextNode("", TextType.TEXT)
+        actual = split_nodes_delimiter([node], "**", TextType.BOLD)
+        expected = [
+            TextNode("", TextType.TEXT)
+        ]
         self.assertEqual(expected, actual)
 
-class TestExtractLinks(unittest.TestCase):
-    def test_extract_markdown_links(self):
-        text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
-        actual = extract_markdown_links(text)
-        expected = [("to boot dev", "https://www.boot.dev"), ("to youtube", "https://www.youtube.com/@bootdotdev")]
-        self.assertEqual(expected, actual)
+    def test_split_delimiter_invalid(self):
+        with self.assertRaises(ValueError) as cm:
+            node = TextNode("This **INVALID!", TextType.TEXT)
+            split_nodes_delimiter([node], "**", TextType.TEXT)
+        invalid_markdown = cm.exception
+        self.assertEqual(str(invalid_markdown), "That's invalid Markdown syntax. Formatted section not closed.")
 
 
 if __name__ == "__main__":

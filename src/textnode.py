@@ -11,8 +11,8 @@ class TextType(Enum):
 class TextNode:
     def __init__(self, text, text_type, url = None):
         self.text = text                    # string - the content
-        self.text_type = text_type    # if isinstance(text_type, TextType) else text_type    # enum value or string
-        self.url = url                      # string - the link (optional)
+        self.text_type = text_type          # enum
+        self.url = url                      # string - the link (optional) (for images and links)
 
     def __eq__(self, other):
         return (
