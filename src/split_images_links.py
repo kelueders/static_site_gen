@@ -74,7 +74,7 @@ def split_nodes_images(old_nodes):
 def split_nodes_links(old_nodes):
     logger = logging.getLogger(__name__)
     new_nodes = []
-
+    
     for j, node in enumerate(old_nodes):
         logger.debug(f'  Node #{j}:  {node}')
 
