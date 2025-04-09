@@ -30,4 +30,38 @@ def markdown_to_blocks(markdown):
     
 
 def block_to_block_type(block):
-    pass
+    if re.search(r'^#{1,6}', block):
+        return BlockType.HEADING
+    
+    elif re.search(r'^`{3}.*`{3}$', block):
+        return BlockType.CODE
+    
+    elif re.search(r'^>.*(\n>.*)+$', block):
+        return BlockType.QUOTE
+    
+    elif re.search(r'^- .*(\n- .*)+$', block):
+        return BlockType.UNORDERED_LIST
+    
+    elif re.search(r'\d\.', block):
+        num_list = block.split("\n")
+        num = 1
+
+        print(f"Num list: {num_list}")
+
+        for item in num_list:
+            if re.search(fr'{num}\. .*', item):
+                num += 1
+            else:
+                break
+
+        print(f"Num: {num}")
+
+        if num == len(num_list) + 1:
+            return BlockType.ORDERED_LIST
+        else:
+            return BlockType.PARAGRAPH
+    
+    else:
+        return BlockType.PARAGRAPH
+        
+    

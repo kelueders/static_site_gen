@@ -1,6 +1,6 @@
 import unittest
 
-from blocks_funcs import markdown_to_blocks
+from blocks_funcs import markdown_to_blocks, block_to_block_type, BlockType
 
 class TestMarkdowntoBlocks(unittest.TestCase):
     # def test_three_blocks(self):
@@ -77,3 +77,46 @@ class TestMarkdowntoBlocks(unittest.TestCase):
                 "- This is a list\n- with items",
             ],
         )
+
+class TestBlockstoBlockType(unittest.TestCase):
+    def test_heading(self):
+        block = '## This is a header'
+        actual = block_to_block_type(block)
+        expected = BlockType.HEADING
+        self.assertEqual(expected, actual)
+
+    def test_code(self):
+        block = '```This is a code block```'
+        actual = block_to_block_type(block)
+        expected = BlockType.CODE
+        self.assertEqual(expected, actual)
+
+    def test_quote(self):
+        block = '''> This is a quote block
+> It is very short
+> Very insightful'''
+        actual = block_to_block_type(block)
+        expected = BlockType.QUOTE
+        self.assertEqual(expected, actual)
+
+    def test_unordered_list(self):
+        block = '''- This is an unordered list
+- It is very short
+- Very insightful'''
+        actual = block_to_block_type(block)
+        expected = BlockType.UNORDERED_LIST
+        self.assertEqual(expected, actual)
+
+    def test_ordered_list(self):
+        block = '''1. This is a numbered list
+2. It is very short
+3. Very insightful'''
+        actual = block_to_block_type(block)
+        expected = BlockType.ORDERED_LIST
+        self.assertEqual(expected, actual)
+
+    def test_paragraph(self):
+        block = '''This is just a normal paragraph'''
+        actual = block_to_block_type(block)
+        expected = BlockType.PARAGRAPH
+        self.assertEqual(expected, actual)
