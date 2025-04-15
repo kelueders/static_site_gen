@@ -2,7 +2,7 @@ import unittest
 
 from leafnode import LeafNode
 from textnode import TextNode, TextType
-from helpers import text_node_to_html_node, split_nodes_delimiter
+from helpers import text_node_to_html_node, split_nodes_delimiter, text_to_textnodes
 
 '''
 Test the text_node_to_html function.
@@ -126,6 +126,27 @@ class TestSplitNodesDelimiter(unittest.TestCase):
             split_nodes_delimiter([node], "**", TextType.TEXT)
         invalid_markdown = cm.exception
         self.assertEqual(str(invalid_markdown), "That's invalid Markdown syntax. Formatted section not closed.")
+
+'''
+Test text_to_textnodes() function
+'''
+class TestTexttoTextNode(unittest.TestCase):
+    def test_text_to_textnodes_all(self):
+        text = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+        actual = text_to_textnodes(text)
+        expected = [
+            TextNode("This is ", TextType.TEXT),
+            TextNode("text", TextType.BOLD),
+            TextNode(" with an ", TextType.TEXT),
+            TextNode("italic", TextType.ITALIC),
+            TextNode(" word and a ", TextType.TEXT),
+            TextNode("code block", TextType.CODE),
+            TextNode(" and an ", TextType.TEXT),
+            TextNode("obi wan image", TextType.IMAGE, "https://i.imgur.com/fJRm4Vk.jpeg"),
+            TextNode(" and a ", TextType.TEXT),
+            TextNode("link", TextType.LINK, "https://boot.dev"),
+        ]
+        self.assertEqual(expected, actual)
 
 
 if __name__ == "__main__":

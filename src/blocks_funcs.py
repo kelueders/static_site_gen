@@ -20,7 +20,7 @@ def markdown_to_blocks(markdown):
     # Split the text wherever there are two new lines
     blocks = markdown.split("\n\n")
 
-    # Change all single new lines with any number of blank spaces after with just '\n'
+    # Replace all single new lines with any number of blank spaces after with just '\n'
     fixed_blocks = []
     for block in blocks:
         block = re.sub(r'\n\s*', '\n', block)
@@ -30,6 +30,9 @@ def markdown_to_blocks(markdown):
     
 
 def block_to_block_type(block):
+    '''
+    Takes a block and returns the BlockType of the block.
+    '''
     if re.search(r'^#{1,6}', block):
         return BlockType.HEADING
     

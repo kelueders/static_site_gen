@@ -72,6 +72,10 @@ def split_nodes_images(old_nodes):
     return new_nodes
 
 def split_nodes_links(old_nodes):
+    '''
+    Takes a list of TextNodes and returns a new list of TextNodes
+    that separates the links content into separate nodes from the text.
+    '''
     logger = logging.getLogger(__name__)
     new_nodes = []
     

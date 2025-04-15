@@ -1,5 +1,6 @@
 from textnode import TextType, TextNode
 from leafnode import LeafNode
+from split_images_links import split_nodes_links, split_nodes_images
 
 def text_node_to_html_node(text_node):
     '''
@@ -26,7 +27,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     '''
     Takes a list of "old nodes", a delimiter, and a text type and returns
     a new list of nodes, where any "text" type nodes in the input list are
-    potentially split into multiple nodes based on the syntax.
+    potentially split into multiple nodes, of various types based on the delimter.
     '''
     # Create an empty list to contain the result of ALL the old_nodes getting split up.
     new_nodes = []
@@ -67,4 +68,18 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
 
     # Return the result of ALL the old_nodes getting split.
     return new_nodes
+
+'''
+Uses the split_nodes_delimiter() function to split a string into separate TextNodes with TextTypes based on the delimiters.
+Also uses split_nodes_images() and split_nodes_links() to split on images and links
+'''
+def text_to_textnodes(text):
+    node = TextNode(text, TextType.TEXT)
+    split_on_bold = split_nodes_delimiter([node], "**", TextType.BOLD)
+    split_on_italics = split_nodes_delimiter(split_on_bold, "*", TextType.ITALIC)
+    split_on_code = split_nodes_delimiter(split_on_italics, "`", TextType.CODE)
+    split_on_images = split_nodes_images(split_on_code)
+    final = split_nodes_links(split_on_images)
+
+    return final
 
