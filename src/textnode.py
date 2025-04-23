@@ -9,6 +9,9 @@ class TextType(Enum):
     IMAGE = "image"
 
 class TextNode:
+    '''
+    Represents different types of inline text that can exist in HTML and Markdown
+    '''
     def __init__(self, text, text_type, url = None):
         self.text = text                    # string - the content
         self.text_type = text_type          # enum

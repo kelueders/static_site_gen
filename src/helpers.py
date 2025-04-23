@@ -69,11 +69,15 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     # Return the result of ALL the old_nodes getting split.
     return new_nodes
 
-'''
-Uses the split_nodes_delimiter() function to split a string into separate TextNodes with TextTypes based on the delimiters.
-Also uses split_nodes_images() and split_nodes_links() to split on images and links
-'''
+
 def text_to_textnodes(text):
+    '''
+    Uses the split_nodes_delimiter() function to split a string into separate TextNodes with TextTypes based on the delimiters.
+    Also uses split_nodes_images() and split_nodes_links() to split on images and links
+
+    Input: string of text
+    Output: list of TextNodes of various text_types
+    '''
     node = TextNode(text, TextType.TEXT)
     split_on_bold = split_nodes_delimiter([node], "**", TextType.BOLD)
     split_on_italics = split_nodes_delimiter(split_on_bold, "*", TextType.ITALIC)

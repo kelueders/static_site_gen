@@ -49,15 +49,11 @@ def block_to_block_type(block):
         num_list = block.split("\n")
         num = 1
 
-        print(f"Num list: {num_list}")
-
         for item in num_list:
             if re.search(fr'{num}\. .*', item):
                 num += 1
             else:
                 break
-
-        print(f"Num: {num}")
 
         if num == len(num_list) + 1:
             return BlockType.ORDERED_LIST
