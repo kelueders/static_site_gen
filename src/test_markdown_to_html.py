@@ -1,7 +1,8 @@
 import unittest
 
-from markdown_to_html import determine_heading_tag, get_list_children, block_to_htmlnode
+from markdown_to_html import markdown_to_html_node, determine_heading_tag, get_list_children, block_to_htmlnode, text_to_children
 from htmlnode import HTMLNode
+from leafnode import LeafNode
 from blocks_funcs import BlockType, block_to_block_type
 
 class TestHelpers(unittest.TestCase):
@@ -100,4 +101,30 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(expected, actual)
 
     def test_text_to_children(self):
-        pass
+        text = "This is another paragraph with _italic_ text and `code` here"
+        actual = text_to_children(text)
+        expected = [
+            LeafNode(None, "This is another paragraph with "),
+            LeafNode("i", "italic"),
+            LeafNode(None, " text and "),
+            LeafNode("code", "code" ),
+            LeafNode(None, " here")
+        ]
+        self.assertEqual(expected, actual)
+
+class TestMarkdowntoHtmlnode(unittest.TestCase):
+    def test_paragraphs(self):
+        md = """
+This is **bolded** paragraph
+text in a p
+tag here
+
+This is another paragraph with _italic_ text and `code` here
+
+"""
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><p>This is <b>bolded</b> paragraph text in a p tag here</p><p>This is another paragraph with <i>italic</i> text and <code>code</code> here</p></div>",
+        )

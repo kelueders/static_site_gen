@@ -148,6 +148,17 @@ class TestTexttoTextNode(unittest.TestCase):
         ]
         self.assertEqual(expected, actual)
 
+    def test_text_to_textnodes_italiccode(self):
+        text = "This is another paragraph with *italic* text and `code` here"
+        actual = text_to_textnodes(text)
+        expected = [
+            TextNode("This is another paragraph with ", TextType.TEXT),
+            TextNode("italic", TextType.ITALIC),
+            TextNode(" text and ", TextType.TEXT),
+            TextNode("code", TextType.CODE),
+            TextNode(" here", TextType.TEXT)
+        ]
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,12 +1,17 @@
 from blocks_funcs import markdown_to_blocks, block_to_block_type, BlockType
 from htmlnode import HTMLNode
+from parentnode import ParentNode
 from helpers import text_to_textnodes, text_node_to_html_node
+from textnode import TextNode
 
 def markdown_to_html_node(markdown):
     '''
     Converts a full markdown document into a single parent HTMLNode with child
     HTMLNode objects representing the nested elements.
     '''
+    # Create empty list to hold the list of HTMLNodes corresponding to each block in the markdown doc
+    html_nodes = []
+
     # Separate markdown document into blocks
     blocks = markdown_to_blocks(markdown)
 
@@ -17,17 +22,19 @@ def markdown_to_html_node(markdown):
         # Based on the type of block, create a new HTMLNode with the proper data
         node = block_to_htmlnode(block, block_type)
 
-        # If the block is a 'code' block, it does NOT do inline markdown parsing of its children
+        # If the block is not a 'code' block, do inline markdown parsing of its children
+        # 'code' blocks do not do inline markdown parsing
         if block_type != BlockType.CODE:
-
             # Split the value of the HTMLNode (a string) into a list of LeafNodes
             children = text_to_children(node.value)
 
             # Assign the children to the HTMLNode representing that block
             node.children = children
-        
-        else:
-            pass
+
+        # Append the node to the list of HTMLNodes corresponding to each block
+        html_nodes.append(node)
+
+    return ParentNode("div", html_nodes)
 
 
 
