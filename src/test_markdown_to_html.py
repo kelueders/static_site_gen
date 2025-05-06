@@ -100,6 +100,9 @@ class TestHelpers(unittest.TestCase):
         expected = HTMLNode('ol', '1. This is an ordered list\n2. It is very short\n3. Very clever', children)
         self.assertEqual(expected, actual)
 
+    ''''
+    ***************TESTS FOR text_to_children()*************
+    '''
     def test_text_to_children(self):
         text = "This is another paragraph with _italic_ text and `code` here"
         actual = text_to_children(text)

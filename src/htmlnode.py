@@ -17,7 +17,7 @@ class HTMLNode:
                 self.props == other.props)
     
     def to_html(self):
-        raise NotImplementedError("to_html is not implemented")
+        raise NotImplementedError("Child classes must implement to_html()") # HTMLNode cannot be converted to HTML, it has to be either a parent or a leaf node
     
     def props_to_html(self):
         if self.props is None:

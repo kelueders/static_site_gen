@@ -2,7 +2,7 @@ from htmlnode import HTMLNode
 
 class LeafNode(HTMLNode):
     def __init__(self, tag, value, props=None):
-        super().__init__(tag, value, None, props)
+        super().__init__(tag, value, None, props) # A LeafNode has no children
     
     def __repr__(self):
         return f"LeafNode(tag={self.tag!r}, value={self.value!r}, props={self.props!r})"

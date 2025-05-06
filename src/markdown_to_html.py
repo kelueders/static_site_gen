@@ -1,6 +1,7 @@
 from blocks_funcs import markdown_to_blocks, block_to_block_type, BlockType
 from htmlnode import HTMLNode
 from parentnode import ParentNode
+from leafnode import LeafNode
 from helpers import text_to_textnodes, text_node_to_html_node
 from textnode import TextNode
 
@@ -46,11 +47,8 @@ def strip_block_of_mdsyntax(block, block_type):
         return block.lstrip('`').rstrip('`')
     else:
         return block
-
-def block_to_htmlnode(block, block_type):
-    text = strip_block_of_mdsyntax(block, block_type)
-    children = None
-
+    
+def get_block_tag(block, block_type):
     if block_type == BlockType.PARAGRAPH:
         tag = 'p'
 
@@ -60,18 +58,48 @@ def block_to_htmlnode(block, block_type):
     elif block_type == BlockType.QUOTE:
         tag = 'blockquote'
 
-    elif block_type == BlockType.CODE:
-        return HTMLNode(tag = "pre", value = f"<code>{text}</code>")
-
     elif block_type == BlockType.UNORDERED_LIST:
         tag = "ul"
-        children = get_list_children(block)
 
     elif block_type == BlockType.ORDERED_LIST:
         tag = "ol"
-        children = get_list_children(block)
+    
+    elif block_type == BlockType.CODE:
+        tag = "code"
+
+    return tag
+
+def block_to_htmlnode(block, block_type):
+    text = strip_block_of_mdsyntax(block, block_type)
+
+    tag = get_block_tag(block, block_type)
+
+    if block_type == BlockType.CODE:
+        leaf = LeafNode(tag = tag, value = text)
+        return ParentNode(tag = "pre", children = [leaf])
+
+    children = text_to_children(text)
+
+    if determine_if_parent(children):
+        if block_type == BlockType.UNORDERED_LIST or block_type == BlockType.ORDERED_LIST:
+            list_children = get_list_children(block)
+            for child in list_children:
+                if determine_if_parent(child):
+                    
+            return ParentNode(tag = tag, )
+        return ParentNode(tag = tag, children = children)
 
     return HTMLNode(tag = tag, value = text, children = children)
+
+def determine_if_parent(children):
+    '''
+    Input: array of children
+    Output: boolean value where True means the node should be a Parent, False means it should be a Leaf
+    '''
+    # If there is inline markdown, the children list will be a list longer than length of 1.
+    if len(children) > 1:
+        return True
+    return False
 
 def determine_heading_tag(heading_block):
     '''
