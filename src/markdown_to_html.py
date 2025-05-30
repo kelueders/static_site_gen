@@ -4,10 +4,11 @@ from parentnode import ParentNode
 from leafnode import LeafNode
 from helpers import text_to_textnodes, text_node_to_html_node
 from textnode import TextNode
+from textnode import TextType
 
 def markdown_to_html_node(markdown):
     '''
-    Converts a full markdown document into a single parent HTMLNode with child
+    Converts a full markdown document into a single parent HTMLNode with child (Leaf)
     HTMLNode objects representing the nested elements.
     '''
     # Create empty list to hold the list of HTMLNodes corresponding to each block in the markdown doc
@@ -17,37 +18,44 @@ def markdown_to_html_node(markdown):
     blocks = markdown_to_blocks(markdown)
 
     for block in blocks:
+        print(f"Block: {block}")
         # Determine block type
         block_type = block_to_block_type(block)
 
-        # Based on the type of block, create a new HTMLNode with the proper data
-        node = block_to_htmlnode(block, block_type)
+        # Based on the type of block, create a new HTMLNode (ParentNode) with the proper data
 
-        # If the block is not a 'code' block, do inline markdown parsing of its children
-        # 'code' blocks do not do inline markdown parsing
+        # Generate the tag
+        tag = get_block_tag(block, block_type)
+
+        stripped_block = strip_block_of_mdsyntax(block, block_type)
+
+        # Generate the children
         if block_type != BlockType.CODE:
-            # Split the value of the HTMLNode (a string) into a list of LeafNodes
-            children = text_to_children(node.value)
+            children = text_to_children(stripped_block)
+        else:
+            children = text_node_to_html_node(TextNode(stripped_block, TextType.CODE))
 
-            # Assign the children to the HTMLNode representing that block
-            node.children = children
+        parent_node = ParentNode(tag, children)
 
-        # Append the node to the list of HTMLNodes corresponding to each block
-        html_nodes.append(node)
+        # Add the newly created node to the list of new ParentNodes
+        html_nodes.append(parent_node)
 
     return ParentNode("div", html_nodes)
 
 
-
 # HELPER FUNCTIONS
-def strip_block_of_mdsyntax(block, block_type):
-    if block_type == BlockType.HEADING or block_type == BlockType.QUOTE:
-        return block.split(maxsplit = 1)[1]
-    elif block_type == BlockType.CODE:
-        return block.lstrip('`').rstrip('`')
-    else:
-        return block
-    
+def text_to_children(text):
+    '''Takes a string of text and returns a list of LeafNodes that represent the inline markdown
+    Works for all block types except CODE'''
+    text_nodes = text_to_textnodes(text)
+
+    children = []
+    for node in text_nodes:
+        child = text_node_to_html_node(node)
+        children.append(child)
+
+    return children
+
 def get_block_tag(block, block_type):
     if block_type == BlockType.PARAGRAPH:
         tag = 'p'
@@ -69,38 +77,6 @@ def get_block_tag(block, block_type):
 
     return tag
 
-def block_to_htmlnode(block, block_type):
-    text = strip_block_of_mdsyntax(block, block_type)
-
-    tag = get_block_tag(block, block_type)
-
-    if block_type == BlockType.CODE:
-        leaf = LeafNode(tag = tag, value = text)
-        return ParentNode(tag = "pre", children = [leaf])
-
-    children = text_to_children(text)
-
-    if determine_if_parent(children):
-        if block_type == BlockType.UNORDERED_LIST or block_type == BlockType.ORDERED_LIST:
-            list_children = get_list_children(block)
-            for child in list_children:
-                if determine_if_parent(child):
-                    
-            return ParentNode(tag = tag, )
-        return ParentNode(tag = tag, children = children)
-
-    return HTMLNode(tag = tag, value = text, children = children)
-
-def determine_if_parent(children):
-    '''
-    Input: array of children
-    Output: boolean value where True means the node should be a Parent, False means it should be a Leaf
-    '''
-    # If there is inline markdown, the children list will be a list longer than length of 1.
-    if len(children) > 1:
-        return True
-    return False
-
 def determine_heading_tag(heading_block):
     '''
     Takes in a block of BlockType.HEADING and returns a node containing the proper 
@@ -110,23 +86,13 @@ def determine_heading_tag(heading_block):
     num_hash_marks = len(hash_marks)
     return f'h{num_hash_marks}'
 
-def get_list_children(list_block):
-    '''
-    Takes in a block of type UNORDERED_LIST or ORDERED_LIST and returns a 
-    list of HTMLNode objects containing each list item.
-    '''
-    items = list_block.split('\n')
-    children = [HTMLNode(tag = 'li', value = item) for item in items]
-    return children
+def strip_block_of_mdsyntax(block, block_type):
+    if block_type == BlockType.HEADING or block_type == BlockType.QUOTE:
+        return block.split(maxsplit = 1)[1]
+    elif block_type == BlockType.CODE:
+        return block.strip('`\n')
+    else:
+        return block
 
-def text_to_children(text):
-    '''
-    Takes a string of text
-    Returns a list of LeafNodes that represent the inline markdown
-    '''
-    # Split the text into a separate list of TextNodes of different text_types
-    textnode_list = text_to_textnodes(text)
 
-    # Convert the list of TextNodes to a list of LeafNodes and return the result
-    return [text_node_to_html_node(node) for node in textnode_list]
 

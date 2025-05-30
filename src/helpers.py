@@ -27,7 +27,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     '''
     Takes a list of "old nodes", a delimiter, and a text type and returns
     a new list of nodes, where any "text" type nodes in the input list are
-    potentially split into multiple nodes, of various types based on the delimter.
+    potentially split into multiple nodes, of various types based on the delimiter.
     '''
     # Create an empty list to contain the result of ALL the old_nodes getting split up.
     new_nodes = []

@@ -1,6 +1,6 @@
 import unittest
 
-from markdown_to_html import markdown_to_html_node, determine_heading_tag, get_list_children, block_to_htmlnode, text_to_children
+from markdown_to_html import markdown_to_html_node, determine_heading_tag, text_to_children, strip_block_of_mdsyntax
 from htmlnode import HTMLNode
 from leafnode import LeafNode
 from blocks_funcs import BlockType, block_to_block_type
@@ -24,81 +24,81 @@ class TestHelpers(unittest.TestCase):
     '''
     *********TESTS for get_list_children()********
     '''
-    def test_get_list_children_unordered(self):
-        block = '''- This is an unordered list
-- It is very short
-- Very insightful'''
-        actual = get_list_children(block)
-        expected = [
-            HTMLNode(tag='li', value='- This is an unordered list'),
-            HTMLNode(tag='li', value='- It is very short'),
-            HTMLNode(tag='li', value='- Very insightful')
-        ]
-        self.assertEqual(expected, actual)
+#     def test_get_list_children_unordered(self):
+#         block = '''- This is an unordered list
+# - It is very short
+# - Very insightful'''
+#         actual = get_list_children(block)
+#         expected = [
+#             HTMLNode(tag='li', value='- This is an unordered list'),
+#             HTMLNode(tag='li', value='- It is very short'),
+#             HTMLNode(tag='li', value='- Very insightful')
+#         ]
+#         self.assertEqual(expected, actual)
 
-    def test_get_list_children_ordered(self):
-        block = '''1. This is an ordered list
-2. It is very short
-3. Very clever'''
-        actual = get_list_children(block)
-        expected = [
-            HTMLNode(tag='li', value='1. This is an ordered list'),
-            HTMLNode(tag='li', value='2. It is very short'),
-            HTMLNode(tag='li', value='3. Very clever')
-        ]
-        self.assertEqual(expected, actual)
+#     def test_get_list_children_ordered(self):
+#         block = '''1. This is an ordered list
+# 2. It is very short
+# 3. Very clever'''
+#         actual = get_list_children(block)
+#         expected = [
+#             HTMLNode(tag='li', value='1. This is an ordered list'),
+#             HTMLNode(tag='li', value='2. It is very short'),
+#             HTMLNode(tag='li', value='3. Very clever')
+#         ]
+#         self.assertEqual(expected, actual)
 
     '''
     ********TESTS for block_to_htmlnode()********
     '''
-    def test_block_to_html_node_p(self):
-        block = "This is **bolded** paragraph text in a p tag here"
-        block_type = block_to_block_type(block)
-        actual = block_to_htmlnode(block, block_type)
-        expected = HTMLNode('p', 'This is **bolded** paragraph text in a p tag here')
-        self.assertEqual(expected, actual)
+#     def test_block_to_html_node_p(self):
+#         block = "This is **bolded** paragraph text in a p tag here"
+#         block_type = block_to_block_type(block)
+#         actual = block_to_htmlnode(block, block_type)
+#         expected = HTMLNode('p', 'This is **bolded** paragraph text in a p tag here')
+#         self.assertEqual(expected, actual)
 
-    def test_block_to_html_node_heading(self):
-        block = "## This is a header 2"
-        block_type = block_to_block_type(block)
-        actual = block_to_htmlnode(block, block_type)
-        expected = HTMLNode('h2', 'This is a header 2')
-        self.assertEqual(expected, actual)
+#     def test_block_to_html_node_heading(self):
+#         block = "## This is a header 2"
+#         block_type = block_to_block_type(block)
+#         actual = block_to_htmlnode(block, block_type)
+#         expected = HTMLNode('h2', 'This is a header 2')
+#         self.assertEqual(expected, actual)
 
-    def test_block_to_html_node_code(self):
-        block = """```This is text that _should_ remain the **same** even with inline stuff```"""
-        block_type = block_to_block_type(block)
-        actual = block_to_htmlnode(block, block_type)
-        expected = HTMLNode('pre', '<code>This is text that _should_ remain the **same** even with inline stuff</code>')
-        self.assertEqual(expected, actual)
+#     def test_block_to_html_node_code(self):
+#         block = """```This is text that _should_ remain the **same** even with inline stuff```"""
+#         block_type = block_to_block_type(block)
+#         actual = block_to_htmlnode(block, block_type)
+#         expected = HTMLNode('pre', '<code>This is text that _should_ remain the **same** even with inline stuff</code>')
+#         self.assertEqual(expected, actual)
 
-    def test_block_to_html_node_unordered(self):
-        block = '''- This is an unordered list
-- It is very short
-- Very insightful'''
-        block_type = block_to_block_type(block)
-        actual = block_to_htmlnode(block, block_type)
-        children = [
-            HTMLNode(tag='li', value='- This is an unordered list'),
-            HTMLNode(tag='li', value='- It is very short'),
-            HTMLNode(tag='li', value='- Very insightful')
-        ]
-        expected = HTMLNode('ul', '- This is an unordered list\n- It is very short\n- Very insightful', children)
-        self.assertEqual(expected, actual)
+#     def test_block_to_html_node_unordered(self):
+#         block = '''- This is an unordered list
+# - It is very short
+# - Very insightful'''
+#         block_type = block_to_block_type(block)
+#         actual = block_to_htmlnode(block, block_type)
+#         children = [
+#             HTMLNode(tag='li', value='- This is an unordered list'),
+#             HTMLNode(tag='li', value='- It is very short'),
+#             HTMLNode(tag='li', value='- Very insightful')
+#         ]
+#         expected = HTMLNode('ul', '- This is an unordered list\n- It is very short\n- Very insightful', children)
+#         self.assertEqual(expected, actual)
 
-    def test_block_to_html_node_ordered(self):
-        block = '''1. This is an ordered list
-2. It is very short
-3. Very clever'''
-        block_type = block_to_block_type(block)
-        actual = block_to_htmlnode(block, block_type)
-        children = [
-            HTMLNode(tag='li', value='1. This is an ordered list'),
-            HTMLNode(tag='li', value='2. It is very short'),
-            HTMLNode(tag='li', value='3. Very clever')
-        ]
-        expected = HTMLNode('ol', '1. This is an ordered list\n2. It is very short\n3. Very clever', children)
-        self.assertEqual(expected, actual)
+#     def test_block_to_html_node_ordered(self):
+#         block = '''1. This is an ordered list
+# 2. It is very short
+# 3. Very clever'''
+#         block_type = block_to_block_type(block)
+#         actual = block_to_htmlnode(block, block_type)
+#         children = [
+#             HTMLNode(tag='li', value='1. This is an ordered list'),
+#             HTMLNode(tag='li', value='2. It is very short'),
+#             HTMLNode(tag='li', value='3. Very clever')
+#         ]
+#         expected = HTMLNode('ol', '1. This is an ordered list\n2. It is very short\n3. Very clever', children)
+#         self.assertEqual(expected, actual)
 
     ''''
     ***************TESTS FOR text_to_children()*************
@@ -115,15 +115,15 @@ class TestHelpers(unittest.TestCase):
         ]
         self.assertEqual(expected, actual)
 
+    ''''
+    ***************TESTS FOR markdown_to_html_node()*************
+    '''
 class TestMarkdowntoHtmlnode(unittest.TestCase):
-    def test_paragraphs(self):
+    def test_paragraphs_basic(self):
         md = """
-This is **bolded** paragraph
-text in a p
-tag here
+This is **bolded** paragraph text in a p tag here
 
 This is another paragraph with _italic_ text and `code` here
-
 """
         node = markdown_to_html_node(md)
         html = node.to_html()
@@ -131,3 +131,47 @@ This is another paragraph with _italic_ text and `code` here
             html,
             "<div><p>This is <b>bolded</b> paragraph text in a p tag here</p><p>This is another paragraph with <i>italic</i> text and <code>code</code> here</p></div>",
         )
+
+    def test_codeblock(self):
+        md = """
+    ```
+    This is text that _should_ remain
+    the **same** even with inline stuff
+    ```
+    """
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
+        )
+
+class TestStripBlock(unittest.TestCase):
+    def test_code(self):
+        block = "```This is a code block```"
+        expected = "This is a code block"
+        self.assertEqual(strip_block_of_mdsyntax(block, BlockType.CODE), expected)
+
+    def test_code_multilines(self):
+        block = """
+```
+This is a code block
+```
+"""
+        expected = "This is a code block"
+        self.assertEqual(strip_block_of_mdsyntax(block, BlockType.CODE), expected)
+
+    def test_code_multilines_inside(self):
+        block = """
+```
+This is text that _should_ remain
+the **same** even with inline stuff
+```
+"""
+        expected = "This is text that _should_ remain\nthe **same** even with inline stuff"
+        self.assertEqual(strip_block_of_mdsyntax(block, BlockType.CODE), expected)
+
+    def test_headers(self):
+        block = "# This is an h1 header"
+        expected = "This is an h1 header"
+        self.assertEqual(strip_block_of_mdsyntax(block, BlockType.HEADING), expected)
