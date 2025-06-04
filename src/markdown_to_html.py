@@ -1,10 +1,10 @@
 from blocks_funcs import markdown_to_blocks, block_to_block_type, BlockType
-from htmlnode import HTMLNode
-from parentnode import ParentNode
-from leafnode import LeafNode
+from nodes.htmlnode import HTMLNode
+from nodes.parentnode import ParentNode
+from nodes.leafnode import LeafNode
 from helpers import text_to_textnodes, text_node_to_html_node
-from textnode import TextNode
-from textnode import TextType
+from nodes.textnode import TextNode
+from nodes.textnode import TextType
 
 def markdown_to_html_node(markdown):
     '''

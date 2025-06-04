@@ -1,7 +1,7 @@
 import unittest
 
-from leafnode import LeafNode
-from textnode import TextNode, TextType
+from nodes.leafnode import LeafNode
+from nodes.textnode import TextNode, TextType
 from helpers import text_node_to_html_node, split_nodes_delimiter, text_to_textnodes
 
 '''

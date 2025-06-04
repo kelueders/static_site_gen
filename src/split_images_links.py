@@ -1,7 +1,7 @@
 import re
 import logging
 
-from textnode import TextNode, TextType
+from nodes.textnode import TextNode, TextType
 
 logging.basicConfig(filename="app.log", level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 

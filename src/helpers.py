@@ -1,5 +1,5 @@
-from textnode import TextType, TextNode
-from leafnode import LeafNode
+from nodes.textnode import TextType, TextNode
+from nodes.leafnode import LeafNode
 from split_images_links import split_nodes_links, split_nodes_images
 
 def text_node_to_html_node(text_node):
