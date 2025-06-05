@@ -121,14 +121,21 @@ the **same** even with inline stuff
         )
 
 class TestBlockstoBlockType(unittest.TestCase):
+
     def test_heading(self):
         block = '## This is a header'
         actual = block_to_block_type(block)
         expected = BlockType.HEADING
         self.assertEqual(expected, actual)
 
-    def test_code(self):
+    def test_code_no_new_line(self):
         block = '```This is a code block```'
+        actual = block_to_block_type(block)
+        expected = BlockType.CODE
+        self.assertEqual(expected, actual)
+
+    def test_code_with_spaces(self):
+        block = "```\nThis is text that _should_ remain\nthe **same** even with inline stuff\n```"
         actual = block_to_block_type(block)
         expected = BlockType.CODE
         self.assertEqual(expected, actual)
@@ -162,3 +169,6 @@ class TestBlockstoBlockType(unittest.TestCase):
         actual = block_to_block_type(block)
         expected = BlockType.PARAGRAPH
         self.assertEqual(expected, actual)
+
+if __name__ == "__main__":
+    unittest.main()

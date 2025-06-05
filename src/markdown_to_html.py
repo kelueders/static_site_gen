@@ -18,7 +18,7 @@ def markdown_to_html_node(markdown):
     blocks = markdown_to_blocks(markdown)
 
     for block in blocks:
-        print(f"Block: {block}")
+        # print(f"Block: {block}")
         # Determine block type
         block_type = block_to_block_type(block)
 
@@ -32,13 +32,16 @@ def markdown_to_html_node(markdown):
         # Generate the children
         if block_type != BlockType.CODE:
             children = text_to_children(stripped_block)
+            node = ParentNode(tag, children)
         else:
-            children = text_node_to_html_node(TextNode(stripped_block, TextType.CODE))
+            pre_tag = tag[0]
+            code_node = text_node_to_html_node(TextNode(stripped_block, TextType.CODE))
+            node = ParentNode(pre_tag, [code_node])
 
-        parent_node = ParentNode(tag, children)
+        # Add the newly created node to the list of new nodes (either parent or leaf)
+        html_nodes.append(node)
 
-        # Add the newly created node to the list of new ParentNodes
-        html_nodes.append(parent_node)
+    print(f"HTML NODE LIST: {html_nodes}")
 
     return ParentNode("div", html_nodes)
 
@@ -73,7 +76,7 @@ def get_block_tag(block, block_type):
         tag = "ol"
     
     elif block_type == BlockType.CODE:
-        tag = "code"
+        return ("pre", "code")
 
     return tag
 
@@ -91,6 +94,7 @@ def strip_block_of_mdsyntax(block, block_type):
         return block.split(maxsplit = 1)[1]
     elif block_type == BlockType.CODE:
         return block.strip('`\n')
+        # return block.strip('`').lstrip('\n')
     else:
         return block
 

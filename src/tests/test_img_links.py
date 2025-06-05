@@ -72,3 +72,6 @@ class TestSplitNodesLinks(unittest.TestCase):
             TextNode(" and it's cool!", TextType.TEXT)
         ]
         self.assertEqual(expected, actual)
+
+if __name__ == "__main__":
+    unittest.main()

@@ -36,7 +36,7 @@ def block_to_block_type(block):
     if re.search(r'^#{1,6}', block):
         return BlockType.HEADING
     
-    elif re.search(r'^`{3}.*`{3}$', block):
+    elif re.search(r'^```[\s\S]*```$', block):
         return BlockType.CODE
     
     elif re.search(r'^>.*(\n>.*)+$', block):
