@@ -105,5 +105,20 @@ This is another paragraph with _italic_ text and `code` here
             "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff</code></pre></div>",
         )
 
+    def test_unordered_list(self):
+        md = """
+## Grocery List
+
+- Peaches
+- Bananas
+- Apples
+"""
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><h2>Grocery List</h2><ul><li>Peaches</li><li>Bananas</li><li>Apples</li></ul></div>",
+        )
+
 if __name__ == "__main__":
     unittest.main()

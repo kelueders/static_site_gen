@@ -18,7 +18,9 @@ def markdown_to_html_node(markdown):
     blocks = markdown_to_blocks(markdown)
 
     for block in blocks:
-        # print(f"Block: {block}")
+
+        print(f"Block: {block}")
+
         # Determine block type
         block_type = block_to_block_type(block)
 
@@ -38,7 +40,7 @@ def markdown_to_html_node(markdown):
             code_node = text_node_to_html_node(TextNode(stripped_block, TextType.CODE))
             node = ParentNode(pre_tag, [code_node])
 
-        # Add the newly created node to the list of new nodes (either parent or leaf)
+        # Add the newly created node to the list of new nodes
         html_nodes.append(node)
 
     print(f"HTML NODE LIST: {html_nodes}")
