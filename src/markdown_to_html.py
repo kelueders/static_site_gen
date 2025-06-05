@@ -45,8 +45,8 @@ def markdown_to_html_node(markdown):
 
 # HELPER FUNCTIONS
 def text_to_children(text):
-    '''Takes a string of text and returns a list of LeafNodes that represent the inline markdown
-    Works for all block types except CODE'''
+    '''Takes a string of text and returns a list of LeafNodes that represent the inline markdown.
+    Note: Works for all block types except CODE'''
     text_nodes = text_to_textnodes(text)
 
     children = []

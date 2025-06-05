@@ -57,6 +57,48 @@ class TestMarkdowntoBlocks(unittest.TestCase):
             "This is the next line after a blank line"
         ]
         self.assertEqual(expected, actual)
+    
+    def test_headers(self):
+        doc = '''
+# This is an h1 header
+
+This is some paragraph test
+
+## This is an h2 header
+'''
+        actual = markdown_to_blocks(doc)
+        expected = [
+            "# This is an h1 header",
+            "This is some paragraph test",
+            "## This is an h2 header"
+        ]
+        self.assertEqual(expected, actual)
+
+    def test_codeblock(self):
+        doc = """
+```
+This is text that _should_ remain
+the **same** even with inline stuff
+```
+"""
+        actual = markdown_to_blocks(doc)
+        expected = [
+            "```\nThis is text that _should_ remain\nthe **same** even with inline stuff\n```"
+        ]
+        self.assertEqual(expected, actual)
+
+    def test_quoteblock(self):
+        doc = """
+        > Somewhere something incredible is waiting to be known
+        
+        Don't you agree?
+        """
+        actual = markdown_to_blocks(doc)
+        expected = [
+            "> Somewhere something incredible is waiting to be known",
+            "Don't you agree?"
+        ]
+        self.assertEqual(expected, actual)
 
     def test_markdown_to_blocks(self):
         md = """

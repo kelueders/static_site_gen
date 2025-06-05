@@ -115,9 +115,9 @@ class TestHelpers(unittest.TestCase):
         ]
         self.assertEqual(expected, actual)
 
-    ''''
-    ***************TESTS FOR markdown_to_html_node()*************
-    '''
+''''
+***************TESTS FOR markdown_to_html_node()*************
+'''
 class TestMarkdowntoHtmlnode(unittest.TestCase):
     def test_paragraphs_basic(self):
         md = """
@@ -132,20 +132,23 @@ This is another paragraph with _italic_ text and `code` here
             "<div><p>This is <b>bolded</b> paragraph text in a p tag here</p><p>This is another paragraph with <i>italic</i> text and <code>code</code> here</p></div>",
         )
 
-    # def test_codeblock(self):
-    #     md = """
-    # ```
-    # This is text that _should_ remain
-    # the **same** even with inline stuff
-    # ```
-    # """
-    #     node = markdown_to_html_node(md)
-    #     html = node.to_html()
-    #     self.assertEqual(
-    #         html,
-    #         "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
-    #     )
+    def test_codeblock(self):
+        md = """
+    ```
+    This is text that _should_ remain
+    the **same** even with inline stuff
+    ```
+    """
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
+        )
 
+''''
+***************TESTS FOR strip_block_of_mdsyntax()*************
+'''
 class TestStripBlock(unittest.TestCase):
     def test_code(self):
         block = "```This is a code block```"
@@ -175,3 +178,8 @@ the **same** even with inline stuff
         block = "# This is an h1 header"
         expected = "This is an h1 header"
         self.assertEqual(strip_block_of_mdsyntax(block, BlockType.HEADING), expected)
+
+    def test_paragraphs(self):
+        block = "This is a **bolded**\nparagraph text \nin a p tag here"
+        expected = "This is a **bolded**\nparagraph text \nin a p tag here"
+        self.assertEqual(strip_block_of_mdsyntax(block, BlockType.PARAGRAPH), expected)
