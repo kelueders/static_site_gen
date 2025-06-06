@@ -1,6 +1,6 @@
 import unittest
 
-from markdown_to_html import markdown_to_html_node, determine_heading_tag, text_to_children, strip_block_of_mdsyntax
+from markdown_to_html import markdown_to_html_node, determine_heading_tag, text_to_children, strip_block_of_mdsyntax, get_list_children
 from nodes.leafnode import LeafNode
 from blocks_funcs import BlockType
 
@@ -32,6 +32,35 @@ class TestHelpers(unittest.TestCase):
             LeafNode(None, " text and "),
             LeafNode("code", "code" ),
             LeafNode(None, " here")
+        ]
+        self.assertEqual(expected, actual)
+
+    def test_no_children(self):
+        text = "This is just a paragraph"
+        actual = text_to_children(text)
+        expected = 0
+        self.assertEqual(expected, actual)
+
+    '''
+    *********TESTS for get_list_children()********
+    '''
+    def test_get_list_children_unordered(self):
+        block = '''- This is an unordered list\n- It is very short\n- Very insightful'''
+        actual = get_list_children(block, BlockType.UNORDERED_LIST)
+        expected = [
+            LeafNode(tag='li', value='This is an unordered list'),
+            LeafNode(tag='li', value='It is very short'),
+            LeafNode(tag='li', value='Very insightful')
+        ]
+        self.assertEqual(expected, actual)
+
+    def test_get_list_children_ordered(self):
+        block = '''1. This is an ordered list\n2. It is very short\n3. Very clever'''
+        actual = get_list_children(block, BlockType.ORDERED_LIST)
+        expected = [
+            LeafNode(tag='li', value='This is an ordered list'),
+            LeafNode(tag='li', value='It is very short'),
+            LeafNode(tag='li', value='Very clever')
         ]
         self.assertEqual(expected, actual)
 

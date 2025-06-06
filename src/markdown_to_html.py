@@ -32,9 +32,17 @@ def markdown_to_html_node(markdown):
         stripped_block = strip_block_of_mdsyntax(block, block_type)
 
         # Generate the children
-        if block_type != BlockType.CODE:
+        if block_type == BlockType.UNORDERED_LIST or block_type == BlockType.ORDERED_LIST:
+            leafs = get_list_children(block, block_type)
+            return li_convert_nodes(leafs)
+        
+        elif block_type != BlockType.CODE:
             children = text_to_children(stripped_block)
-            node = ParentNode(tag, children)
+            if children == 0:
+                node = LeafNode(tag, stripped_block)
+            else:
+                node = ParentNode(tag, children)
+                
         else:
             pre_tag = tag[0]
             code_node = text_node_to_html_node(TextNode(stripped_block, TextType.CODE))
@@ -50,14 +58,18 @@ def markdown_to_html_node(markdown):
 
 # HELPER FUNCTIONS
 def text_to_children(text):
-    '''Takes a string of text and returns a list of LeafNodes that represent the inline markdown.
+    '''Takes a string of text and returns a list of LeafNodes that represent 
+    the inline markdown.
     Note: Works for all block types except CODE'''
+    children = []
     text_nodes = text_to_textnodes(text)
 
-    children = []
     for node in text_nodes:
         child = text_node_to_html_node(node)
         children.append(child)
+    
+    if len(children) == 1:
+        return 0
 
     return children
 
@@ -99,6 +111,43 @@ def strip_block_of_mdsyntax(block, block_type):
         # return block.strip('`').lstrip('\n')
     else:
         return block
+    
+def get_list_children(list_block, block_type):
+    '''
+    Takes in a block of type UNORDERED_LIST or ORDERED_LIST and returns a 
+    list of HTMLNode objects containing each list item.
+    '''
+    items = list_block.split('\n')
 
+    for item in items:
+        if block_type == BlockType.UNORDERED_LIST:
+            return [LeafNode(tag = 'li', value = item[2:]) for item in items]
+        else:
+            return [LeafNode(tag = 'li', value = item[3:]) for item in items]
+        
+# def determine_if_parent(children):
+#     '''
+#     Input: array of children
+#     Output: boolean value where True means the node should be a Parent, False means it should be a Leaf
+#     '''
+#     # If there is inline markdown, the children list will be a list longer than length of 1.
+#     if len(children) > 1:
+#         return True
+#     return False
 
+def li_convert_nodes(leaf_nodes):
+    '''
+    Takes in a list of LeafNodes. If the value of the node contains inline markdown,
+    then that list item is converted to a ParentNode with the inline parts as children.
+    Returns a new list of HTMLNodes that are either Leafs or Parents.
+    Notes: uses text_to_children()
+    '''
+    list_items = []
+    for node in leaf_nodes:
+        if text_to_children(node.value) == 0:
+            list_items.append(node)
+        else:
+            new_parent = ParentNode(node.tag, text_to_children(node.value))
+            list_items.append(new_parent)
+    return list_items
 
