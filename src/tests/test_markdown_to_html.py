@@ -64,6 +64,16 @@ class TestHelpers(unittest.TestCase):
         ]
         self.assertEqual(expected, actual)
 
+    def test_get_list_children_fruit(self):
+        block = '''- Peaches\n- Bananas\n- Apples'''
+        actual = get_list_children(block, BlockType.UNORDERED_LIST)
+        expected = [
+            LeafNode(tag='li', value='Peaches'),
+            LeafNode(tag='li', value='Bananas'),
+            LeafNode(tag='li', value='Apples')
+        ]
+        self.assertEqual(expected, actual)
+
 ''''
 ***************TESTS FOR strip_block_of_mdsyntax()*************
 '''

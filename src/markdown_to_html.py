@@ -17,12 +17,17 @@ def markdown_to_html_node(markdown):
     # Separate markdown document into blocks
     blocks = markdown_to_blocks(markdown)
 
+    print(f'Number of blocks: {len(blocks)}')
+
     for block in blocks:
 
         print(f"Block: {block}")
 
         # Determine block type
         block_type = block_to_block_type(block)
+
+        # print(f"Block Type: {block_type}")
+
 
         # Based on the type of block, create a new HTMLNode (ParentNode) with the proper data
 
