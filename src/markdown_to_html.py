@@ -144,6 +144,7 @@ def li_convert_nodes(leaf_nodes):
     '''
     Takes in a list of LeafNodes. If the value of the node contains inline markdown,
     then that list item is converted to a ParentNode with the inline parts as children.
+    Otherwise, the node remains a LeafNode.
     Returns a new list of HTMLNodes that are either Leafs or Parents.
     Notes: uses text_to_children()
     '''
